@@ -52,7 +52,7 @@ export async function up(db: Kysely<never>): Promise<void> {
     .createTable("tasks")
     .ifNotExists()
     .addColumn("id", "serial", (cb) => cb.primaryKey())
-    .addColumn("test-github-ci", "varchar(255)", (cb) => cb.notNull())
+    .addColumn("test-github-action", "varchar(255)", (cb) => cb.notNull())
     .addColumn("uuid", "uuid", (col) =>
       col
         .defaultTo(sql`gen_random_uuid()`)
