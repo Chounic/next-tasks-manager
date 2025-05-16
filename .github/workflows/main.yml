@@ -26,6 +26,11 @@ jobs:
         run: pnpm install
 
       - name: Run migrations
+        run: pnpm exec kysely migrate:down
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          
+      - name: Run migrations
         run: pnpm exec kysely migrate:up
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
