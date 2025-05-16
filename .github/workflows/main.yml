@@ -20,12 +20,16 @@ jobs:
 
       - name: 🔍 Check DB connection and 'tasks' table
         env:
-          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          PGHOST: ${{ secrets.PGHOST }}
+          PGPORT: ${{ secrets.PGPORT }}
+          PGDATABASE: ${{ secrets.PGDATABASE }}
+          PGUSER: ${{ secrets.PGUSER }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
         run: |
           echo "Checking DB connection..."
-          psql "$POSTGRES_URL" -c "SELECT 1;"
+          psql -c "SELECT 1;"
           echo "Checking if 'tasks' table exists..."
-          TABLE_EXISTS=$(psql "$POSTGRES_URL" -tAc "SELECT to_regclass('public.tasks')")
+          TABLE_EXISTS=$(psql -tAc "SELECT to_regclass('public.tasks')")
           if [ "$TABLE_EXISTS" = "public.tasks" ]; then
             echo "✅ Table 'tasks' exists."
           else
