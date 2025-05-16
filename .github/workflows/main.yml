@@ -28,9 +28,9 @@ jobs:
       - name: Run migrations
         run: pnpm exec kysely migrate:down
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           
       - name: Run migrations
         run: pnpm exec kysely migrate:up
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
