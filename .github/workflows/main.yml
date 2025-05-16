@@ -1,0 +1,28 @@
+name: Migrate Database on Migration File Change
+
+on:
+  push:
+    paths:
+      - 'database/migrations/**' # Trigger only when migration files change
+      - '.github/workflows/migrate.yml' # Allow editing this file to retrigger
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run migrations
+        run: pnpm exec kysely migrate:up
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
